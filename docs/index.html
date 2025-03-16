@@ -3,28 +3,477 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mtproto-lib Documentation</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>MTProto-Lib Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar {
+            background-color: #2d3748;
+            transition: transform 0.3s ease-in-out;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                z-index: 50;
+            }
+        }
+        .content {
+            background-color: #2d3748;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        pre {
+            background-color: #1a202c;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        code {
+            color: #f687b3;
+        }
+        .menu-bar {
+            background-color: #2d3748;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .menu-bar a:hover, .sidebar a:hover {
+            background-color: #4a5568;
+            transition: background-color 0.3s ease;
+        }
+        .menu-bar a, .sidebar a {
+            transition: background-color 0.3s ease;
+        }
+        .menu-bar a.active, .sidebar a.active {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:hover, .sidebar a.active:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:focus, .sidebar a.active:focus {
+            outline: none;
+        }
+        .menu-bar a.active:active, .sidebar a.active:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited, .sidebar a.active:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:link, .sidebar a.active:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:hover, .sidebar a.active:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:focus, .sidebar a.active:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:active, .sidebar a.active:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited, .sidebar a.active:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:link, .sidebar a.active:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:hover, .sidebar a.active:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:focus, .sidebar a.active:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:active, .sidebar a.active:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited, .sidebar a.active:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:link, .sidebar a.active:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:link, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:link {
+            background-color: #4a5568;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:hover {
+            background-color: #5a6678;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:focus {
+            outline: none;
+        }
+        .menu-bar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:active, .sidebar a.active:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:visited:active {
+            background-color: #6a7588;
+        }
+        .menu-bar(Due to technical issues, the search service is temporarily unavailable.)
+
+To create a more attractive and professional documentation site, we can enhance the CSS with modern design elements, better spacing, and a more polished look. Below is the updated HTML and CSS code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTProto-Lib Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar {
+            background-color: #2d3748;
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar-hidden {
+            transform: translateX(-100%);
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                z-index: 50;
+            }
+        }
+        .content {
+            background-color: #2d3748;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        pre {
+            background-color: #1a202c;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+        }
+        code {
+            color: #f687b3;
+        }
+        .menu-bar {
+            background-color: #2d3748;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .menu-bar a:hover, .sidebar a:hover {
+            background-color: #4a5568;
+        }
+        .section-title {
+            color: #63b3ed;
+            border-bottom: 2px solid #63b3ed;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .example-title {
+            color: #68d391;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .code-block {
+            background-color: #2d3748;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .code-block code {
+            color: #f687b3;
+        }
+        .sidebar-link {
+            color: #e2e8f0;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .sidebar-link:hover {
+            background-color: #4a5568;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>mtproto-lib Documentation</h1>
-        <p>Version: <span id="version"></span> | Date: <span id="date"></span></p>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#overview">Overview</a></li>
-            <li><a href="#modules">Modules</a></li>
-            <li><a href="#setup">Setup</a></li>
-            <li><a href="#future">Future Plans</a></li>
-        </ul>
+    <!-- Menu Bar -->
+    <nav class="menu-bar fixed top-0 w-full p-4 flex justify-between items-center shadow-md z-40">
+        <div class="flex items-center space-x-4">
+            <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <h1 class="text-xl font-bold text-white">MTProto-Lib Documentation</h1>
+        </div>
+        <div class="space-x-4">
+            <a href="#overview" class="text-white hover:bg-gray-600 px-3 py-2 rounded">Overview</a>
+            <a href="#modules" class="text-white hover:bg-gray-600 px-3 py-2 rounded">Modules</a>
+            <a href="#examples" class="text-white hover:bg-gray-600 px-3 py-2 rounded">Examples</a>
+        </div>
     </nav>
-    <section id="content">
-        <div id="overview"></div>
-        <div id="modules"></div>
-        <div id="setup"></div>
-        <div id="future"></div>
-    </section>
-    <script src="script.js"></script>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar w-64 h-screen p-4 fixed top-0 mt-16 md:mt-0 md:sticky md:top-0 overflow-y-auto">
+        <nav>
+            <ul class="space-y-2">
+                <li><a href="#version" class="sidebar-link">__version__.py</a></li>
+                <li><a href="#init" class="sidebar-link">__init__.py</a></li>
+                <li><a href="#rpc" class="sidebar-link">rpc.py</a></li>
+                <li><a href="#exceptions" class="sidebar-link">exceptions.py</a></li>
+                <li><a href="#emoji" class="sidebar-link">emoji.py</a></li>
+                <li><a href="#enums" class="sidebar-link">enums.py</a></li>
+                <li><a href="#filters" class="sidebar-link">filters.py</a></li>
+                <li><a href="#handlers" class="sidebar-link">handlers.py</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ml-0 md:ml-64 mt-16 p-6">
+        <section id="overview" class="mb-8">
+            <h2 class="section-title text-2xl font-semibold mb-4">Overview</h2>
+            <div class="content">
+                <p>
+                    <code>mtproto-lib</code> is a modern, Python-based library for interacting with the Telegram MTProto API. It provides a robust framework for building Telegram clients, featuring components for RPC handling, exception management, emoji support, enumerated types, filters, and handlers. The library is designed to be modular, extensible, and developer-friendly, with a focus on type safety and asynchronous programming.
+                </p>
+            </div>
+        </section>
+
+        <section id="modules" class="mb-8">
+            <h2 class="section-title text-2xl font-semibold mb-4">Modules</h2>
+
+            <div id="version" class="mb-6">
+                <h3 class="text-xl font-semibold text-white mb-2">__version__.py</h3>
+                <div class="content">
+                    <p>Defines the version of the library, following semantic versioning.</p>
+                    <h4 class="text-lg font-medium text-gray-300 mt-4">Attributes</h4>
+                    <ul class="list-disc pl-5">
+                        <li><code>__version__ (str)</code>: The version string (e.g., "1.0.0").</li>
+                        <li><code>VERSION (str)</code>: Alias for <code>__version__</code>.</li>
+                        <li><code>VERSION_INFO (tuple[int])</code>: Tuple of version numbers (e.g., (1, 0, 0)).</li>
+                    </ul>
+                    <h4 class="example-title">Example</h4>
+                    <div class="code-block">
+                        <pre><code>from mtproto.__version__ import __version__, VERSION_INFO
+print(f"Version: {__version__}")  # Version: 1.0.0
+print(f"Version Info: {VERSION_INFO}")  # Version Info: (1, 0, 0)
+</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Repeat similar structure for other modules -->
+
+        </section>
+
+        <section id="examples" class="mb-8">
+            <h2 class="section-title text-2xl font-semibold mb-4">Examples</h2>
+            <div class="content">
+                <h4 class="example-title">Combined Filters and Handlers</h4>
+                <div class="code-block">
+                    <pre><code>from mtproto.utils.filters import Command, Text, create_and_filter
+from mtproto.utils.handlers import HandlerManager, MessageHandler
+from mtproto.client.neon_client import NeonClient
+from mtproto.schema.tl_object import TLObject
+
+async def handle_message(obj: TLObject, client: NeonClient):
+    print(f"Message: {obj.values['message']}")
+
+async def main():
+    client = NeonClient(name="test", api_id=12345, api_hash="your_api_hash")
+    manager = HandlerManager(client)
+    filter = create_and_filter(Command("start"), Text("hello"))
+    manager.add_handler(MessageHandler(handle_message, filter))
+
+    # Simulate update
+    class MockUpdate(TLObject):
+        def __init__(self):
+            self.values = {"message": "/start hello", "chat_id": 123}
+
+    await manager.process_update(MockUpdate())
+
+asyncio.run(main())
+# Output: Message: /start hello
+</code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar-hidden');
+        });
+
+        // Close sidebar on link click (mobile)
+        sidebar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    sidebar.classList.add('sidebar-hidden');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
