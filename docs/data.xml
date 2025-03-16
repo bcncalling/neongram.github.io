@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<documentation>
+    <project name="mtproto-lib" version="0.1" date="2025-03-16">
+        <overview>
+            <description>
+                mtproto-lib is a Python library for interacting with the Telegram MTProto API. This documentation covers the initial development, including enums, handlers, and filters.
+            </description>
+        </overview>
+        <modules>
+            <module name="enums.py">
+                <description>Defines enumerations for MTProto states, types, and error codes.</description>
+                <features>
+                    <feature>UpdateType for MTProto updates</feature>
+                    <feature>MessageState for message lifecycle</feature>
+                    <feature>ErrorCode as IntEnum</feature>
+                </features>
+            </module>
+            <module name="handlers.py">
+                <description>Implements handlers for processing MTProto updates.</description>
+                <features>
+                    <feature>Handler base class</feature>
+                    <feature>MessageHandler, UpdateHandler, etc.</feature>
+                    <feature>HandlerManager for registration</feature>
+                </features>
+            </module>
+            <module name="filters.py">
+                <description>Provides filters for MTProto update processing.</description>
+                <features>
+                    <feature>Command, Text, Regex filters</feature>
+                    <feature>Chat, User, Media filters</feature>
+                    <feature>Logical combiners (AND, OR)</feature>
+                </features>
+            </module>
+        </modules>
+        <setup>
+            <step>Install Python and Git</step>
+            <step>Clone repository: git clone https://github.com/yourusername/mtproto-lib.git</step>
+            <step>Run setup.py or use pip install .</step>
+        </setup>
+        <future>
+            <plan>Expand handler types</plan>
+            <plan>Add authentication module</plan>
+            <plan>Improve filter performance</plan>
+        </future>
+    </project>
+</documentation>
